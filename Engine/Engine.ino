@@ -4,7 +4,7 @@
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 #include <string.h>
 
-Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
+Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 Adafruit_DCMotor *leftMotor = AFMS.getMotor(3);
 Adafruit_DCMotor *rightMotor = AFMS.getMotor(4);
 
@@ -24,7 +24,7 @@ void setup() {
   // put your setup code here, to run once:
   AFMS.begin();
   leftMotor->setSpeed(255);
-  Serial.begin(9600);   //Sets the baud for serial data transmission                               
+  Serial.begin(9600);   //Sets the baud for serial data transmission
   pinMode(ledPin, OUTPUT);      // sets the digital pin as output
 
   //leftMotor->run(FORWARD);
@@ -39,23 +39,23 @@ void setup() {
 void loop() {
 
     //delay(1000);                  // waits for a second
-    
+
       //Serial.write(data);          //Print Value inside data in Serial monitor
 
   if(Serial.available() > 0)      // Send data only when you receive data:
    {
       data = Serial.read();        //Read the incoming data & store into data
       Serial.print(data);          //Print Value inside data in Serial monitor
-      Serial.print("\n");   
-      
+      Serial.print("\n");
+
       switch(data){
         case '1': left(); break;
         case '2': up(); break;
-        case '3': right();break;  
+        case '3': right();break;
         case '4': down(); break;
         case '5': square(); break;
         case '6': triangle(); break;
-        case '7': circle();break;  
+        case '7': circle();break;
         case '8': crossX(); break;
         default :     leftMotor->run(RELEASE);
                       rightMotor->run(RELEASE);
