@@ -5,8 +5,8 @@
 #include <string.h>
 
 Adafruit_MotorShield motorShield = Adafruit_MotorShield();
-Adafruit_DCMotor *leftMotor = AFMS.getMotor(3);
-Adafruit_DCMotor *rightMotor = AFMS.getMotor(4);
+Adafruit_DCMotor *leftMotor = motorShield.getMotor(3);
+Adafruit_DCMotor *rightMotor = motorShield.getMotor(4);
 
 char data = '0';            //Variable for storing received data
 void left();
@@ -17,7 +17,7 @@ void up();
 
 void setup() {
   motorShield.begin(); //start connection to motor shield
-
+  pinMode(8, OUTPUT);
   Serial.begin(9600);   //Sets the baud for serial data transmission
 
   //set right and left motors to max speed
@@ -30,8 +30,10 @@ void loop() {
   if(Serial.available() > 0)      // Send data only when you receive data:
    {
       data = Serial.read();        //Read the incoming data & store into data
-      Serial.print(data);          //Print Value inside data in Serial monitor
+      Serial.print("Data Value: ");          //Print Value inside data in Serial monitor
+      Serial.print(data);
       Serial.print("\n");
+      digitalWrite(8, HIGH);
 
       switch(data){
         case '1': left(); break;
@@ -44,6 +46,8 @@ void loop() {
           break;
       }
    }
+   delay(1000);
+   digitalWrite(8, LOW);
 }
 
 void left(){

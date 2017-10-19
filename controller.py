@@ -27,16 +27,16 @@ class PS4Controller(object):
     ser = None
     def init(self):
         """Initialize the joystick components"""
-        
+
         pygame.init()
         pygame.joystick.init()
         self.controller = pygame.joystick.Joystick(0)
         self.controller.init()
-        ser = serial.Serial('/dev/tty.usbserial', 9600)
+        self.ser = serial.Serial('COM5', 9600)
 
     def listen(self):
         """Listen for events to happen"""
-        
+
         if not self.axis_data:
             self.axis_data = {}
 
@@ -51,6 +51,8 @@ class PS4Controller(object):
                 self.hat_data[i] = (0, 0)
 
         while True:
+            if self.ser.in_waiting:
+                print self.ser.readline()
             prev = self.axis_data
             for event in pygame.event.get():
                 if event.type == pygame.JOYAXISMOTION:
@@ -64,16 +66,18 @@ class PS4Controller(object):
 
                 # Insert your code on what you would like to happen for each event here!
                 # In the current setup, I have the state simply printing out to the screen.
-                if self.axis_data != prev
-                    ser.write(self.axis_data)
+                #if(self.axis_data != prev):
 
-                    os.system('clear')
-                    pprint.pprint(self.button_data)
-                    pprint.pprint(self.axis_data)
-                    pprint.pprint(self.hat_data)
+            self.ser.write(b'DATA')
 
 
-                
+            # os.system('clear')
+            # pprint.pprint(self.button_data)
+            # pprint.pprint(self.axis_data)
+            # pprint.pprint(self.hat_data)
+
+
+
 
 
 
